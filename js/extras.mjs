@@ -110,13 +110,10 @@ export function renderVerseImage(lines, { from, to, dark = false, size = 1080 } 
   canvas.width = canvas.height = size;
   const ctx = canvas.getContext('2d');
   const c = dark
-    ? { bg1: '#1b1d22', bg2: '#232a35', ink: '#eef1f6', muted: '#aab4c3', accent: '#9fb4d4' }
-    : { bg1: '#f8f9fc', bg2: '#e4eaf3', ink: '#1b2230', muted: '#5f6b7d', accent: '#3b5478' };
+    ? { bg: '#1B1D21', ink: '#E8EAED', muted: '#A3A9B3', accent: '#8497F0' }
+    : { bg: '#FFFFFF', ink: '#1D2129', muted: '#596170', accent: '#3B5BDB' };
 
-  const grad = ctx.createLinearGradient(0, 0, size, size);
-  grad.addColorStop(0, c.bg1);
-  grad.addColorStop(1, c.bg2);
-  ctx.fillStyle = grad;
+  ctx.fillStyle = c.bg;
   ctx.fillRect(0, 0, size, size);
 
   const pad = size * 0.11;
@@ -125,7 +122,7 @@ export function renderVerseImage(lines, { from, to, dark = false, size = 1080 } 
   ctx.font = `600 ${size * 0.024}px "Segoe UI", Tahoma, Arial, sans-serif`;
   ctx.fillStyle = c.accent;
   ctx.textBaseline = 'alphabetic';
-  ctx.fillText('CHINH PHỤ NGÂM', pad, pad + size * 0.06);
+  ctx.fillText('Chinh Phụ Ngâm', pad, pad + size * 0.06);
 
   const serif = '"Noto Serif", "Times New Roman", Georgia, serif';
   let fontSize = size * 0.05;

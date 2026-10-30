@@ -11,7 +11,7 @@
 // this worker only ever creates or deletes caches whose names start with PREFIX.
 'use strict';
 
-const VERSION = '2026-10-09.1';
+const VERSION = '2026-10-30.1';
 const PREFIX = 'chinhphungam-';
 const SHELL_CACHE = `${PREFIX}shell-${VERSION}`;
 const RUNTIME_CACHE = `${PREFIX}runtime-${VERSION}`;

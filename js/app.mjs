@@ -93,7 +93,7 @@ function buildExplanation(line, absoluteIndex) {
   if (notes.meaning) {
     const p = document.createElement('p');
     p.className = 'simple-meaning';
-    p.innerHTML = '<b>HIỂU ĐƠN GIẢN</b><br>';
+    p.innerHTML = '<b>Hiểu đơn giản</b><br>';
     p.append(document.createTextNode(notes.meaning));
     box.append(p);
   } else {
@@ -107,7 +107,7 @@ function buildExplanation(line, absoluteIndex) {
   if (notes.glossary.length) {
     const label = document.createElement('div');
     label.className = 'vocab-label';
-    label.textContent = 'TỪ & ĐIỂN TÍCH';
+    label.textContent = 'Từ & điển tích';
     box.append(label);
     const list = document.createElement('div');
     list.className = 'vocab-list';
@@ -149,7 +149,7 @@ function renderPage() {
 
   const head = document.createElement('div');
   head.className = 'column-head';
-  head.innerHTML = '<div>NGUYÊN VĂN</div><div>GIẢI NGHĨA</div>';
+  head.innerHTML = '<div>Nguyên văn</div><div>Giải nghĩa</div>';
   fragment.append(head);
 
   const marks = new Set(getBookmarks());
@@ -292,10 +292,15 @@ document.addEventListener('keydown', event => {
 
 /* ---------- Line actions: bookmark, read aloud, image ---------- */
 
+const ICON_ATTRS = 'viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
+const ICON_SPEAKER = `<svg ${ICON_ATTRS}><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>`;
+const ICON_IMAGE = `<svg ${ICON_ATTRS}><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg>`;
+
 function lineActions(lineNo, marked) {
   const wrap = document.createElement('span');
   wrap.className = 'line-actions';
-  const make = (action, label, text, pressed) => {
+  // `icon` is a fixed glyph or one of the small line icons below, never page text.
+  const make = (action, label, icon, pressed) => {
     const b = document.createElement('button');
     b.type = 'button';
     b.dataset.action = action;
@@ -303,12 +308,12 @@ function lineActions(lineNo, marked) {
     b.title = label;
     b.setAttribute('aria-label', `${label} câu ${lineNo}`);
     if (pressed !== undefined) b.setAttribute('aria-pressed', String(pressed));
-    b.textContent = text;
+    b.innerHTML = icon;
     return b;
   };
   const mark = make('mark', marked ? 'Bỏ đánh dấu' : 'Đánh dấu', marked ? '★' : '☆', marked);
   if (marked) mark.classList.add('on');
-  wrap.append(mark, make('say', 'Nghe đọc', '🔊'), make('image', 'Tạo ảnh khổ thơ', '🖼'));
+  wrap.append(mark, make('say', 'Nghe đọc', ICON_SPEAKER), make('image', 'Tạo ảnh khổ thơ', ICON_IMAGE));
   return wrap;
 }
 
@@ -338,7 +343,7 @@ function renderBookmarks() {
 
 function setSpeaking(on) {
   state.speaking = on;
-  els.readPageBtn.textContent = on ? '⏹ Dừng đọc' : '🔊 Đọc trang';
+  els.readPageBtn.textContent = on ? 'Dừng đọc' : 'Đọc to trang này';
 }
 
 function speak(lines) {
